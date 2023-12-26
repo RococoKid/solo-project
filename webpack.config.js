@@ -48,5 +48,9 @@ module.exports = {
     proxy: {
       '**': 'http://localhost:3000',
     }
-  }
+  },
+  resolve: {
+    // Enable importing JS / JSX files without specifying their extension
+    extensions: ['.js', '.jsx'],
+  },
 };
