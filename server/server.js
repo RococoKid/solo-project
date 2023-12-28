@@ -1,18 +1,19 @@
 const path = require('path');
 const express = require('express');
-
+const controller = require('./controllers/controller');
 const app = express();
 const PORT = 3000;
 //json parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+//this is where we create a session
+app.post('/createSession', controller.createSession, (req, res) => res.status(200).json({}));
 //This is where we add a question
-app.post('/', /*some middleware here*/, (req, res) => res.status(200).json({}))
+//app.post('/', /*some middleware here*/, (req, res) => res.status(200).json({}))
 
 //This is where we retrieve a randomly selected question
-app.get('/', /*some middleware here*/, (req, res) => res.status(200).json({}))
+//app.get('/', /*some middleware here*/, (req, res) => res.status(200).json({}))
 
 //catchall route for 404
 app.use('/', (req, res, next) => {
@@ -30,3 +31,4 @@ app.use((err, req, res, next) => {
     console.log(errorObj.log);
     return res.status(errorObj.status).json(errorObj.message);
   });
+app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
