@@ -18,11 +18,27 @@ controller.createSession = (req, res, next) => {
             message: {err: 'session was not successfully created'}
         }))
     };
+
 controller.createQuestion = (req, res, next) => {
-
+    const addNewQuestion = `INSERT INTO Questions (Question) VALUES ('testQuestion')`;
+    db.query(addNewQuestion)
+        .then(data => {
+            console.log(data);
+            return next();
+        })
+        .catch(err => next({
+            log: 'question was not successfully created',
+            status: 404, 
+            message: {err: 'question was not successfully created'}
+        }))
     };
-controller.selectQuestion = (req, res, next) => {
 
+controller.selectQuestion = (req, res, next) => {
+    //identify session id
+    //find number of questions w/ that session id
+    //use that to generate random number
+    //use random number to identify question
+    //serve up that question
     }; 
 
 module.exports = controller;

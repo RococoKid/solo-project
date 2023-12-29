@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 //this is where we create a session
 app.post('/createSession', controller.createSession, (req, res) => res.status(200).json({}));
 //This is where we add a question
-//app.post('/', /*some middleware here*/, (req, res) => res.status(200).json({}))
+app.post('/createQuestion', controller.createQuestion, (req, res) => res.status(200).json({}))
 
 //This is where we retrieve a randomly selected question
 //app.get('/', /*some middleware here*/, (req, res) => res.status(200).json({}))
