@@ -23,13 +23,13 @@ controller.createSession = (req, res, next) => {
 controller.getSessionID = (req, res, next) => {
 //identify session name from req.body
 //identify corresponding session id from sessions table
-    console.log('this is the request body', req.body);
+   // console.log('this is the request body', req.body);
     const getSessionID = `SELECT SessionID FROM Sessions WHERE SessionName = '${req.body.session}'`;
-    db.query(getSessionID) //we don't know what this is!!!!!! we need to test!!!!
+    db.query(getSessionID) 
         .then(data => {
             //console.log('this is what we get back from our query', data);
             res.locals.sessionID = data.rows[0].sessionid;
-            console.log('this should be the session id:', res.locals.sessionID);
+            //console.log('this should be the session id:', res.locals.sessionID);
             return next();
         })
         .catch(err => next({
@@ -43,6 +43,7 @@ controller.createQuestion = (req, res, next) => {
     //insert new record into questions table, 
         //where question is from the req.body
         //and session id is what we described above
+    //console.log('are we getting here?')
     const addNewQuestion = `INSERT INTO Questions (Question, SessionID) VALUES ('${req.body.question}', '${res.locals.sessionID}')`;
     db.query(addNewQuestion)
         .then(data => {
@@ -58,19 +59,22 @@ controller.createQuestion = (req, res, next) => {
 
 controller.selectQuestion = (req, res, next) => {
     //identify session id from session name
-
+        //from earlier middleware getSessionID
     //get random record with that id
-    //const findQuestion = `SELECT Question FROM Questions WHERE SessionID = ${req.body.sessionID}`;
+    const findQuestion = `SELECT Question FROM Questions WHERE SessionID = '${res.locals.sessionID}' ORDER BY RANDOM() LIMIT 1`;
     //serve up that question
     db.query(findQuestion)
         .then(data => {
             console.log(data);
+            res.locals.revealedQuestion = data.rows[0].question;
+            //console.log('The revealed question is:', res.locals.revealedQuestion)
             return next();
         })
         .catch(err => next({
-            log: 'question was not successfully selected',
+            // log: 'question was not successfully selected',
+            log: err,
             status: 404, 
-            message: {err: 'question was not successfully selected'}
+            message: {err: err}
         }))
     }; 
 

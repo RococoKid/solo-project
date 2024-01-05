@@ -12,8 +12,8 @@ app.post('/createSession', controller.createSession, (req, res) => res.status(20
 //This is where we add a question
 app.post('/createQuestion', controller.getSessionID, controller.createQuestion, (req, res) => res.status(200).json({}))
 
-//This is where we retrieve a randomly selected question
-app.get('/selectQuestion', controller.selectQuestion, (req, res) => res.status(200).json({}))
+//This is where we publish a randomly selected question from our session
+app.get('/selectQuestion', controller.getSessionID, controller.selectQuestion, (req, res) => res.status(200).json({revealedQuestion : res.locals.revealedQuestion}))
 
 //catchall route for 404
 app.use('/', (req, res, next) => {
