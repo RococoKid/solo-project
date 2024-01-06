@@ -21,14 +21,14 @@ const App = () => {
     const getQuestion = () => {
         useEffect(() => {
             fetch('http://localhost:3000/selectQuestion')
-            .then((res) => {
-                return res.json()
-            })
-            .then((data) => {
-                console.log(data);
-                setQuestion(data)
-            })
-        }, [])
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    console.log(data);
+                    setQuestion(data)
+                })
+         }, [])
     };
     //field where question shows up
 //define my functions, then pass variable into onclick below
@@ -73,12 +73,16 @@ const Button = ({}) => {
         </button>
     )
 };
-
-const Field = ({}) => {
+const Form ({}) => {
     return (
-        
+        <form></form>
     )
-};
+}
+// const Field = ({}) => {
+//     return (
+        
+//     )
+// };
 
 const Menu = ({}) => {
     return (
@@ -88,3 +92,4 @@ const Menu = ({}) => {
 
 const root = createRoot(document.querySelector('#root'));
 root.render(<App />,);
+
